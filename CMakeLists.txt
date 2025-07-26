@@ -15,6 +15,7 @@ add_library(QCanopenMaster SHARED
   QCanopenMaster_global.h
   qcanopenmaster.cpp
   qcanopenmaster.h
+  CanOpen/canopenObject.cpp CanOpen/canopenObject.h CanOpen/driver.cpp CanOpen/driver.h CanOpen/parameters.h
 )
 
 set_target_properties(QCanopenMaster PROPERTIES
