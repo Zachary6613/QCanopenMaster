@@ -17,6 +17,17 @@ add_library(QCanopenMaster SHARED
   qcanopenmaster.h
 )
 
+set_target_properties(QCanopenMaster PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY_DEBUG   "${CMAKE_SOURCE_DIR}/lib/Debug"
+    ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${CMAKE_SOURCE_DIR}/lib/Release"
+
+    LIBRARY_OUTPUT_DIRECTORY_DEBUG   "${CMAKE_SOURCE_DIR}/lib/Debug"
+    LIBRARY_OUTPUT_DIRECTORY_RELEASE "${CMAKE_SOURCE_DIR}/lib/Release"
+
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG   "${CMAKE_SOURCE_DIR}/bin/Debug"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_SOURCE_DIR}/bin/Release"
+)
+
 target_link_libraries(QCanopenMaster PRIVATE Qt${QT_VERSION_MAJOR}::Core)
 
 target_compile_definitions(QCanopenMaster PRIVATE QCANOPENMASTER_LIBRARY)
