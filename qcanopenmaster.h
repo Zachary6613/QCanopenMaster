@@ -5,8 +5,9 @@
 #include <QTimer>
 #include <QThread>
 
-#include "CanOpen/NMT.h"
 #include "CanOpen/canopenObject.h"
+#include "CanOpen/NMT.h"
+
 
 class QCANOPENMASTER_EXPORT QCanopenMaster : public QObject{
     Q_OBJECT
@@ -26,7 +27,7 @@ public:
 
     Q_INVOKABLE void sendNMT(uint8_t command);
 
-private slots:
+signals:
     void initDeviceSig();
     void openDeviceSig();
     void closeDeviceSig();
