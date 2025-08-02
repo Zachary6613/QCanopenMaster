@@ -1,9 +1,6 @@
 #include <cstdint>
-#include <QVector>
-#include <QObject>
-#include <QVariant>
-#include <QVariantList>
-#include <QMutex>
+#include <QString>
+#include <QMap>
 
 // CAN帧结构体定义
 struct CANFrameStr {
@@ -53,7 +50,7 @@ struct SlaveInfo {
 struct CanOpenSlaveStr {
     uint8_t currentNodeId = 0;                              // 节点 ID（1~127）
     uint8_t slaveCount = 0;
-    QVector<SlaveInfo> slaveList;                           // 所有从站信息列表
+    QMap<QString, SlaveInfo> slaveList;                     // 所有从站信息列表
 };
 
 // CANopen 描述
