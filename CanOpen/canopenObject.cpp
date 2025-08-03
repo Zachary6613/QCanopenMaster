@@ -78,6 +78,14 @@ void CanopenObject::clear() {
     emit ListChanged("0", QVariantMap{});
 }
 
+void CanopenObject::removeNode(QString nodeId){
+    {
+        QWriteLocker locker(&m_lock);
+        m_map.remove(nodeId);
+    }
+    emit ListChanged(nodeId, QVariantMap{});
+}
+
 void CanopenObject::addNode(QString nodeId){
     QVariantMap item;
     item.clear();

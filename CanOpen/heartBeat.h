@@ -3,7 +3,9 @@
 #include <QObject>
 #include <QDateTime>
 #include <QDebug>
+
 #include "driver.h"
+#include "canopenObject.h"
 
 class Heartbeat : public QObject
 {
@@ -16,6 +18,8 @@ public:
     // 处理心跳帧
     void process();
     void heartBeatHandle();
+
+    CanopenObject canopenObject;
 
 public slots:
     void receiveCanFrame(CANFrameStr data);

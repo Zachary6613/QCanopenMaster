@@ -14,7 +14,8 @@ public:
 
     void insert(uint16_t nodeId, uint16_t index, uint8_t subIndex, const QVariantMap &data);
     void update(uint16_t nodeId, uint16_t index, uint8_t subIndex, const QVariantMap &data);
-
+    void addNode(QString nodeId);
+    void removeNode(QString nodeId);
     QVariantMap get(uint16_t nodeId, uint16_t index, uint8_t subIndex) const;
     QVariantMap getAll(uint16_t nodeId) const;
     void clear();
@@ -28,7 +29,7 @@ signals:
     void ListChanged(const QString &nodeId,const QVariantMap &item);
 
 private:
-    void addNode(QString nodeId);
+
 
     QMap<QString, QVariantMap> m_map;          // <node, data(key: "1000_00" -> value: QVariantMap)>
 

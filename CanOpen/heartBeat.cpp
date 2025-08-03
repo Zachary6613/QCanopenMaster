@@ -63,6 +63,7 @@ void Heartbeat::heartBeatHandle()
         }
 
         if (diff > deleteTimeoutMs){
+            canopenObject.removeNode(QString::number(it->nodeId));
             it = canOpenStr->canOpenSlave.slaveList.erase(it); // 删除超时从站并移动迭代器
             canOpenStr->canOpenSlave.slaveCount--;
         }
@@ -97,6 +98,7 @@ void Heartbeat::heartBeatHandle()
                 newSlave.lastFrameTimestamp = time;
                 this->canOpenStr->canOpenSlave.slaveList.insert(QString::number(nodeId), newSlave);
                 this->canOpenStr->canOpenSlave.slaveCount++;
+                canopenObject.removeNode(QString::number(it->nodeId));
             }
 
         }
