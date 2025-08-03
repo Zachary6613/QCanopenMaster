@@ -18,6 +18,8 @@ add_library(QCanopenMaster SHARED
   CanOpen/canopenObject.cpp CanOpen/canopenObject.h CanOpen/driver.cpp CanOpen/driver.h CanOpen/parameters.h
   CanOpen/NMT.h
   CanOpen/NMT.cpp
+  CanOpen/heartBeat.h
+  CanOpen/heartBeat.cpp
 )
 
 set_target_properties(QCanopenMaster PROPERTIES

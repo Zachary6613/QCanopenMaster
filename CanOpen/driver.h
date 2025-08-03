@@ -15,9 +15,11 @@ class Driver : public QObject {
 public:
 
     static Driver* instance(CANopenStr* canOpenStr = nullptr);
+    void process();
 
 public slots:
 
+    void initDevice(QVariantMap params);
     void openDevice();
     void closeDevice();
     void resetCanDevice();
@@ -30,13 +32,13 @@ signals:
     void HeartBeat(CANFrameStr data);
     void PDOMsg(CANFrameStr data);
     void sendError(QString error);
-    void sendCanFrameToUi(QVariantMap item);
+    void sendCanFrameToUi(CANFrameStr data);
 
 private:
     explicit Driver(CANopenStr* canOpenStr, QObject* parent = nullptr);
     ~Driver();
 
-    void process();
+
     void receiveCanFrame(uint32_t len);
     bool sendCanFrame(CANFrameStr data);
 
