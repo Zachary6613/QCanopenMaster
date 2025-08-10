@@ -38,6 +38,7 @@ void QCanopenMaster::init() {
     nmt->moveToThread(nmtThread);
 
     QObject::connect(this, &QCanopenMaster::sendNMTSig, nmt, &NMT::sendNMT);
+    QObject::connect(nmt, &NMT::sendCanFrame, driver, &Driver::sendRequest);
 
     QObject::connect(nmtThread, &QThread::started, nmt, &NMT::process);
     nmtThread->start();
@@ -52,7 +53,19 @@ void QCanopenMaster::init() {
     QObject::connect(heartBeatThread, &QThread::started, heartBeat, &Heartbeat::process);
     nmtThread->start();
 
+    // SDO线程
+    sdo = SDO::instance(&canopenStr);
+    QThread* sdoThread = new QThread;
+    sdo->moveToThread(sdoThread);
 
+    QObject::connect(driver, &Driver::SDOMsg, sdo, &SDO::receiveCanFrame);
+    QObject::connect(this, &QCanopenMaster::uploadSDOSig, sdo, &SDO::uploadSDO);
+    QObject::connect(this, &QCanopenMaster::downloadSDOSig, sdo, &SDO::downloadSDO);
+    QObject::connect(this, &QCanopenMaster::resetSDOStateSig, sdo, &SDO::resetSDOState);
+
+    QObject::connect(sdo, &SDO::sendCanFrame, driver, &Driver::sendRequest);
+    QObject::connect(sdo, &SDO::sendSdoItem, this, &QCanopenMaster::sendSdoItem);
+    QObject::connect(sdo, &SDO::sendError, this, &QCanopenMaster::sendErrorSig);
     //  Object同步：heartBeat、
 
 }
@@ -133,4 +146,20 @@ void QCanopenMaster::sendCanFrameToUi(CANFrameStr data) {
     item["data"] = dataStr.trimmed();
     item["time"] = data.time;
     emit sendCanFrameToUiSig(item);
+}
+
+void QCanopenMaster::uploadSDO(uint16_t nodeId, uint16_t index, uint8_t subIndex, QVariant data) {
+    emit uploadSDOSig(nodeId, index, subIndex, data);
+}
+
+void QCanopenMaster::downloadSDO(uint16_t nodeId, uint16_t index, uint8_t subIndex, QVariant data) {
+    emit downloadSDOSig(nodeId, index, subIndex, data);
+}
+
+void QCanopenMaster::resetSDOState() {
+    emit resetSDOStateSig();
+}
+
+void QCanopenMaster::sendSdoItem(uint16_t nodeId, uint16_t index, uint8_t subIndex, QVariantMap sdoItem) {
+    emit sendSdoItemSig(nodeId, index, subIndex, sdoItem);
 }

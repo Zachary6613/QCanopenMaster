@@ -8,6 +8,7 @@
 #include "CanOpen/canopenObject.h"
 #include "CanOpen/NMT.h"
 #include "CanOpen/heartBeat.h"
+#include "CanOpen/SDO.h"
 
 
 class QCANOPENMASTER_EXPORT QCanopenMaster : public QObject{
@@ -27,13 +28,20 @@ public: // API For external use
     Q_INVOKABLE void sendRequest(QVariantMap params); //canId: "601", data: "01020304"
 
     Q_INVOKABLE void sendNMT(uint8_t command); // 0x01: Start, 0x02: Stop, 0x80: Pre-Operational, 0x81: Reset Node, 0x82: Reset Communication
+
+    Q_INVOKABLE void uploadSDO(uint16_t nodeId, uint16_t index, uint8_t subIndex, QVariant data);
+    Q_INVOKABLE void downloadSDO(uint16_t nodeId, uint16_t index, uint8_t subIndex, QVariant data);
+    Q_INVOKABLE void resetSDOState();
 signals: // Sig For external use
     void sendErrorSig(QString error);
-    void sendCanFrameToUiSig(QVariantMap item); //
+    void sendCanFrameToUiSig(QVariantMap item);
+
+    void sendSdoItemSig(uint16_t nodeId, uint16_t index, uint8_t subIndex, QVariantMap sdoItem);
 
 public slots:
     void sendError(QString error);
     void sendCanFrameToUi(CANFrameStr data);
+    void sendSdoItem(uint16_t nodeId, uint16_t index, uint8_t subIndex, QVariantMap sdoItem);
 
 signals:
     void initDeviceSig(QVariantMap params);
@@ -44,6 +52,10 @@ signals:
 
     void sendNMTSig(uint8_t command);
 
+    void uploadSDOSig(uint16_t nodeId, uint16_t index, uint8_t subIndex, QVariant data);
+    void downloadSDOSig(uint16_t nodeId, uint16_t index, uint8_t subIndex, QVariant data);
+    void resetSDOStateSig();
+
 private:
     explicit QCanopenMaster(QObject* parent = nullptr);
     ~QCanopenMaster();
@@ -53,5 +65,6 @@ private:
     Driver* driver;
     NMT* nmt;
     Heartbeat* heartBeat;
+    SDO* sdo;
 };
 
