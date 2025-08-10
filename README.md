@@ -102,7 +102,7 @@ Send NMT instruction:
 - **`sendSdoItemSig(uint16_t nodeId, uint16_t index, uint8_t subIndex, QVariantMap sdoItem)`**  
   Report when SDO data is received.
 
-# 许可协议
+# License
 
 This project is open-sourced under the [MIT License](./LICENSE).  
 Please refer to the LICENSE file in the repository root for details.  
