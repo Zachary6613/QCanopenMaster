@@ -33,6 +33,28 @@ void QCanopenMaster::init() {
     driverThread->start();
 
     // NMT 线程
+    nmt = NMT::instance(&canopenStr);
+    QThread* nmtThread = new QThread;
+    nmt->moveToThread(nmtThread);
+
+    QObject::connect(this, &QCanopenMaster::sendNMTSig, nmt, &NMT::sendNMT);
+
+    QObject::connect(nmtThread, &QThread::started, nmt, &NMT::process);
+    nmtThread->start();
+
+    // 心跳线程
+    heartBeat = Heartbeat::instance(&canopenStr);
+    QThread* heartBeatThread = new QThread;
+    heartBeat->moveToThread(heartBeatThread);
+
+    QObject::connect(driver, &Driver::HeartBeatMsg, heartBeat, &Heartbeat::receiveCanFrame);
+
+    QObject::connect(heartBeatThread, &QThread::started, heartBeat, &Heartbeat::process);
+    nmtThread->start();
+
+
+    //  Object同步：heartBeat、
+
 }
 
 void QCanopenMaster::process() {

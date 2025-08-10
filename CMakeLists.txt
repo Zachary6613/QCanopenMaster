@@ -20,6 +20,8 @@ add_library(QCanopenMaster SHARED
   CanOpen/NMT.cpp
   CanOpen/heartBeat.h
   CanOpen/heartBeat.cpp
+  CanOpen/SDO.h CanOpen/SDO.cpp
+  utils/ByteParser.cpp utils/ByteParser.h
 )
 
 set_target_properties(QCanopenMaster PROPERTIES

@@ -29,7 +29,7 @@ public slots:
 signals:
     void NMTMsg(CANFrameStr data);
     void SDOMsg(CANFrameStr data);
-    void HeartBeat(CANFrameStr data);
+    void HeartBeatMsg(CANFrameStr data);
     void PDOMsg(CANFrameStr data);
     void sendError(QString error);
     void sendCanFrameToUi(CANFrameStr data);

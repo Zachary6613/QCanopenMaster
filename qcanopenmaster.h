@@ -7,6 +7,7 @@
 
 #include "CanOpen/canopenObject.h"
 #include "CanOpen/NMT.h"
+#include "CanOpen/heartBeat.h"
 
 
 class QCANOPENMASTER_EXPORT QCanopenMaster : public QObject{
@@ -51,5 +52,6 @@ private:
     QMap<QString, CanopenObject> canopenObject;
     Driver* driver;
     NMT* nmt;
+    Heartbeat* heartBeat;
 };
 
