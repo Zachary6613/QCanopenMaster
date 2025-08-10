@@ -3,6 +3,7 @@
 # Qt Canopen Master
 English | [简体中文](README_zh_CN.md)
 </div>
+
 # QCanopenMaster
 
 QCanopenMaster is a lightweight CANopen master component based on Qt. It encapsulates core functionalities such as device drivers, NMT management, heartbeat monitoring, and SDO access. It provides a simple and consistent QObject/QML-friendly interface for easy and fast integration into Qt applications.
