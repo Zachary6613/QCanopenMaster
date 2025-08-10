@@ -6,6 +6,7 @@
 
 #include "driver.h"
 #include "canopenObject.h"
+#include "../utils/ByteParser.h"
 
 class SDO : public QObject
 {
@@ -27,8 +28,7 @@ public slots:
 
 signals:
     void sendCanFrame(CANFrameStr frame);
-    void sendSdoList(QVariantMap sdoList);
-    void sendSdoItem(QVariantMap sdoItem);
+    void sendSdoItem(uint16_t nodeId, uint16_t index, uint8_t subIndex, QVariantMap sdoItem);
     void sendError(QString error);
 
 private:
@@ -61,6 +61,15 @@ private:
         QVariant data;
     };
     QVector<UploadSdoItem> uploadSdoIndexList;
+    QVariantMap uploadMap;
+
+    // 分段上传
+    uint32_t uploadBytes;
+    QByteArray uploadSdoBuffer;
+    uint32_t uploadSendCSFlag;
+    uint16_t uploadNodeId;
+    uint16_t uploadIndex;
+    uint8_t uploadSubIndex;
 
     // 下载标志位
     bool hasNewDownload = false;
@@ -71,6 +80,15 @@ private:
         QVariant data;
     };
     QVector<DownloadSdoItem> downloadSdoIndexList;
+    QVariantMap downloadMap;
+
+    // 分段下载
+    uint32_t downloadBytes;
+    QByteArray downloadSdoBuffer;
+    uint32_t downloadSendCSFlag = 0x10;
+    uint16_t downloadNodeId;
+    uint16_t downloadIndex;
+    uint8_t downloadSubIndex;
 
     CANopenStr* canOpenStr = nullptr;
 
